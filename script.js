@@ -3,7 +3,22 @@ var colors = generateRandomColors(6),
 		pickedColor = pickColor(),
 		colorDisplay = document.getElementById('colorDisplay'),
 		messageDisplay = document.querySelector('#message'),
-		h1 = document.querySelector('h1');
+		h1 = document.querySelector('h1'),
+		resetButton = document.querySelector('#reset');
+
+resetButton.addEventListener('click', function(){
+	//generate all new color
+	colors = generateRandomColors(6)
+	//pick new random color from array
+	pickedColor = pickColor();
+	//change colorDisplay to match picked color
+	colorDisplay.textContent = pickedColor;
+	//change colors of square
+	for(var i = 0; i < squares.length; i++){
+		squares[i].style.background = colors[i];
+	}
+	h1.style.background = '#232323';
+});
 
 
 colorDisplay.textContent = pickedColor;
@@ -20,6 +35,7 @@ for (var i = 0; i < squares.length; i++) {
 		console.log(clickedColor, pickedColor);
 		if(clickedColor === pickedColor){
 			messageDisplay.textContent = 'Correct!';
+			resetButton.textContent = "Play Again?";
 			changeColors(clickedColor);
 			h1.style.background = clickedColor;
 		} else {
