@@ -6,48 +6,40 @@ var numSquares = 6,
     messageDisplay = document.querySelector('#message'),
     h1 = document.querySelector('h1'),
     resetButton = document.querySelector('#reset'),
-    easyBtn = document.querySelector('#easyBtn'),
-    hardBtn = document.querySelector('#hardBtn');
+    modeButtons = document.querySelectorAll('.mode');
 
-easyBtn.addEventListener('click', function() {
-    easyBtn.classList.add('selected');
-    hardBtn.classList.remove('selected');
-    numSquares = 3;
-    colors = generateRandomColors(numSquares);
+for(var i = 0; i < modeButtons.length; i++){
+	modeButtons[i].addEventListener('click', function(){
+		//removing .selected class to both just to be safe
+		modeButtons[0].classList.remove('selected');
+		modeButtons[1].classList.remove('selected');
+		//sets up the event listener
+		this.classList.add('selected');
+		this.textContent === 'Easy' ? numSquares = 3 : numSquares = 6;
+		reset();
+	});
+}
+
+
+function reset() {
+		colors = generateRandomColors(numSquares);
     pickedColor = pickColor();
     colorDisplay.textContent = pickedColor;
-    for (var i = 0; i < squares.length; i++) {
-        if (colors[i]) {
-            squares[i].style.background = colors[i];
-        } else {
-            squares[i].style.display = 'none';
-        }
-    }
-});
-
-hardBtn.addEventListener('click', function() {
-    hardBtn.classList.add('selected');
-    easyBtn.classList.remove('selected');
-    numSquares = 6;
-    colors = generateRandomColors(numSquares);
-    pickedColor = pickColor();
-    colorDisplay.textContent = pickedColor;
-    for (var i = 0; i < squares.length; i++) {
-        squares[i].style.background = colors[i];
-        squares[i].style.display = 'block';
-    }
-});
-
-resetButton.addEventListener('click', function() {
-    colors = generateRandomColors(numSquares);
-    pickedColor = pickColor();
-    colorDisplay.textContent = pickedColor;
-    this.textContent = "New Colors";
+    resetButton.textContent = "New Colors";
     messageDisplay.textContent = "";
     for (var i = 0; i < squares.length; i++) {
+    	if (colors[i]) {
+    		squares[i].style.display = 'block';
         squares[i].style.background = colors[i];
+    	} else {
+    		squares[i].style.display = 'none';
+    	}
     }
     h1.style.background = 'steelblue';
+}
+
+resetButton.addEventListener('click', function() {
+	reset();
 });
 
 colorDisplay.textContent = pickedColor;
